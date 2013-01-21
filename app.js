@@ -9,7 +9,8 @@ var express = require('express')
   , test = require('./routes/test')
   , http = require('http')
   , path = require('path')
-  , request = require('request');
+  , request = require('request')
+  , testMiddleware = require('./models/testMiddleware');
 
 var app = module.exports = express();
 
@@ -30,21 +31,10 @@ app.configure('development', function(){
 });
 
 
-// require('./routes/site')(app, routes);
-var testMiddleware = function(req, res, next) {
-  req.data = {
-    "list":[
-      {"item":"adsf"},
-      {"item":"jkl;"}
-    ]
-  };
-  next();
-};
-
   
 app.get('/', routes.index);
 
-app.get('/test', testMiddleware, test.test);
+app.get('/test', testMiddleware.index, test.test);
 app.get('/users', user.list);
 
 if(process.env.DEBUG) {
