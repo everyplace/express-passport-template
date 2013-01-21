@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , test = require('./routes/test')
   , http = require('http')
   , path = require('path')
   , request = require('request');
@@ -30,8 +31,20 @@ app.configure('development', function(){
 
 
 // require('./routes/site')(app, routes);
+var testMiddleware = function(req, res, next) {
+  req.data = {
+    "list":[
+      {"item":"adsf"},
+      {"item":"jkl;"}
+    ]
+  };
+  next();
+};
 
+  
 app.get('/', routes.index);
+
+app.get('/test', testMiddleware, test.test);
 app.get('/users', user.list);
 
 if(process.env.DEBUG) {
