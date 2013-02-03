@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
@@ -30,10 +25,9 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-
+console.log(testMiddleware);
   
 app.get('/', routes.index);
-
 app.get('/test', testMiddleware.index, test.test);
 app.get('/users', user.list);
 

@@ -1,15 +1,15 @@
 {
   "name": "Express-Hogan-Template",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
+  "version": "0.1.0",
   "dependencies": {
-    "express": "3.0.6",
+    "express": "*",
     "http":"*",
     "path":"*",
     "request":"*",
     "hjs":"*"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
   }
 }
