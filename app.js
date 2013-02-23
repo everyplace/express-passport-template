@@ -31,10 +31,8 @@ app.get('/', routes.index);
 app.get('/test', testMiddleware.index, test.test);
 app.get('/users', user.list);
 
-if(process.env.DEBUG) {
+if(process.env.DEBUG == 'true') {
   console.log("DEBUG ENABLED");
-
-  console.log("routes", app.routes);
 };
 
 http.createServer(app).listen(app.get('port'), function(){
