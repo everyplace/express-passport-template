@@ -5,9 +5,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , request = require('request')
-  , passport = require('passport')
-  , flickrstrategy = require('passport-flickr')
-  , testMiddleware = require('./models/testMiddleware');
+  , passport = require('passport')  
+  , passportconfig = require('./middleware/passport');
 
 var app = module.exports = express();
 
@@ -31,53 +30,16 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-
-passport.use(new flickrstrategy.Strategy({
-    consumerKey: process.env.FLICKR_API_KEY,
-    consumerSecret: process.env.FLICKR_API_SECRET,
-    callbackURL: "http://localhost:5000/auth/flickr/callback"
-  },
-  function(token, tokenSecret, profile, done) {
-    console.log(token, tokenSecret, profile);
-    done(null, profile);
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  done(null, id);
-});
-
-
-app.get('/auth/flickr',
-  passport.authenticate('flickr'),
-  function(req, res){
-    // The request will be redirected to Flickr for authentication, so this
-    // function will not be called.
-  });
-
-app.get('/auth/flickr/callback', 
-  passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
-
-app.get('/session', function(req, res){
-  console.log(req.session);
-  res.redirect('/');
-});
-
-  
+app.get('/auth/flickr', passportconfig.flickrauth);
+app.get('/auth/flickr/callback', passportconfig.flickrcallback);
 app.get('/', routes.index);
-app.get('/test', testMiddleware.index, test.test);
-app.get('/users', user.list);
 
 if(process.env.DEBUG == 'true') {
   console.log("DEBUG ENABLED");
+  app.get('/session', function(req, res){
+    console.log(req.session);
+    res.redirect('/');
+  });  
 };
 
 http.createServer(app).listen(app.get('port'), function(){
