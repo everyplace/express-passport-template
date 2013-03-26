@@ -5,6 +5,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , request = require('request')
+  , passport = require('passport')
   , testMiddleware = require('./models/testMiddleware');
 
 var app = module.exports = express();
@@ -15,6 +16,8 @@ app.configure(function(){
   app.set('view engine', 'hjs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
+  app.use(passport.initialize());
+  app.use(passport.session());  
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
@@ -25,7 +28,6 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-console.log(testMiddleware);
   
 app.get('/', routes.index);
 app.get('/test', testMiddleware.index, test.test);
