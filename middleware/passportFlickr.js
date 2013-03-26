@@ -25,10 +25,10 @@ passport.deserializeUser(function(id, done) {
   done(null, id);
 });
 
-exports.flickrauth = function(req, res, next){
+exports.auth = function(req, res, next){
   passport.authenticate('flickr')(req, res, next);
 };
 
-exports.flickrcallback = function(req, res, next){
+exports.callback = function(req, res, next){
   passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' })(req, res, next);
 };
