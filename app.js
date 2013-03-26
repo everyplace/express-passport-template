@@ -19,9 +19,9 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.cookieParser()); 
   app.use(express.bodyParser());
-  app.use(express.session({ secret: 'its a secret to everybody' }));  
+  app.use(express.session({ secret: process.env.COOKIE_SECRET }));  
   app.use(passport.initialize());
-  app.use(passport.session({ secret: 'its a secret to everybody' }));  
+  app.use(passport.session({ secret: process.env.COOKIE_SECRET }));  
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
