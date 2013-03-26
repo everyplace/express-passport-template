@@ -68,7 +68,7 @@ app.get('/auth/flickr/callback',
 
 app.get('/session', function(req, res){
   console.log(req.session);
-  res.end();
+  res.redirect('/');
 });
 
   
