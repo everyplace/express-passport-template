@@ -1,3 +1,4 @@
 index.html
 {{title}}
 {{test}}
+<a href="/auth/flickr">flickr auth</a>

@@ -6,6 +6,7 @@ var express = require('express')
   , path = require('path')
   , request = require('request')
   , passport = require('passport')
+  , flickrstrategy = require('passport-flickr')
   , testMiddleware = require('./models/testMiddleware');
 
 var app = module.exports = express();
@@ -16,9 +17,11 @@ app.configure(function(){
   app.set('view engine', 'hjs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(passport.initialize());
-  app.use(passport.session());  
+  app.use(express.cookieParser()); 
   app.use(express.bodyParser());
+  app.use(express.session({ secret: 'its a secret to everybody' }));  
+  app.use(passport.initialize());
+  app.use(passport.session({ secret: 'its a secret to everybody' }));  
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -28,17 +31,40 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-passport.use(new FlickrStrategy({
+
+passport.use(new flickrstrategy.Strategy({
     consumerKey: process.env.FLICKR_API_KEY,
     consumerSecret: process.env.FLICKR_API_SECRET,
     callbackURL: "http://localhost:5000/auth/flickr/callback"
   },
   function(token, tokenSecret, profile, done) {
-    User.findOrCreate({ flickrId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
+    console.log(token, tokenSecret, profile);
+    done(null, profile);
   }
 ));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  done(null, id);
+});
+
+
+app.get('/auth/flickr',
+  passport.authenticate('flickr'),
+  function(req, res){
+    // The request will be redirected to Flickr for authentication, so this
+    // function will not be called.
+  });
+
+app.get('/auth/flickr/callback', 
+  passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
   
 app.get('/', routes.index);
