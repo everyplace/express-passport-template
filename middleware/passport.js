@@ -1,7 +1,8 @@
 
 /*
- * testMiddleware
+ * Passport Middleware
  */
+
 var passport = require('passport')
   , flickrstrategy = require('passport-flickr');
 
@@ -25,19 +26,9 @@ passport.deserializeUser(function(id, done) {
 });
 
 exports.flickrauth = function(req, res, next){
-  passport.authenticate('flickr'),
-  function(req, res){
-    // The request will be redirected to Flickr for authentication, so this
-    // function will not be called.
-  }
-  res.end();
+  passport.authenticate('flickr')(req, res, next);
 };
 
 exports.flickrcallback = function(req, res, next){
-  passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  }
-  res.end();
+  passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' })(req, res, next);
 };

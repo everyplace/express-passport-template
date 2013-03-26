@@ -30,6 +30,9 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+
+
+
 app.get('/auth/flickr', passportconfig.flickrauth);
 app.get('/auth/flickr/callback', passportconfig.flickrcallback);
 app.get('/', routes.index);
