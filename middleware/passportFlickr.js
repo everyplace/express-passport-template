@@ -1,15 +1,16 @@
 
 /*
- * Passport Middleware
+ * Passport Middleware for Flickr
  */
 
 var passport = require('passport')
-  , flickrstrategy = require('passport-flickr');
+  , flickrstrategy = require('passport-flickr')
+  , config = JSON.parse(process.env.FLICKR);
 
 passport.use(new flickrstrategy.Strategy({
-    consumerKey: process.env.FLICKR_API_KEY,
-    consumerSecret: process.env.FLICKR_API_SECRET,
-    callbackURL: "http://localhost:5000/auth/flickr/callback"
+    consumerKey: config.api_key,
+    consumerSecret: config.api_secret,
+    callbackURL: config.callback_url
   },
   function(token, tokenSecret, profile, done) {
     console.log(token, tokenSecret, profile);

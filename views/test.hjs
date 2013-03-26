@@ -1,6 +1,0 @@
-index.html
-{{firstName}}
-{{lastName}}
-{{#list}}
-	{{item}}
-{{/list}}

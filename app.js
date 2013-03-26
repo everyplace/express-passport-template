@@ -6,7 +6,8 @@ var express = require('express')
   , path = require('path')
   , request = require('request')
   , passport = require('passport')  
-  , passportFlickr = require('./middleware/passportFlickr');
+  , passportFlickr = require('./middleware/passportFlickr')
+  , passportTwitter = require('./middleware/passportTwitter');
 
 var app = module.exports = express();
 
@@ -31,10 +32,10 @@ app.configure('development', function(){
 });
 
 
-
-
 app.get('/auth/flickr', passportFlickr.auth);
 app.get('/auth/flickr/callback', passportFlickr.callback);
+app.get('/auth/twitter', passportTwitter.auth);
+app.get('/auth/twitter/callback', passportTwitter.callback);
 app.get('/', routes.index);
 
 if(process.env.DEBUG == 'true') {

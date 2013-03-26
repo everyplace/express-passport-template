@@ -1,5 +1,8 @@
 index.html
 {{title}}
 {{test}}
-<a href="/auth/flickr">flickr auth</a>
+<ul>
+	<li><a href="/auth/flickr">flickr auth</a></li>
+	<li><a href="/auth/twitter">twitter auth</a></li>
+</ul>
 <a href="/session">read session</a>
