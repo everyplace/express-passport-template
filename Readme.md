@@ -1,4 +1,4 @@
-Express Hogan Heroku Template
-=============================
+Express Passport Template
+=========================
 
-Useful for quickly spinning up heroku instances of relatively static sites.
+Useful for quickly spinning up heroku instances of passport-enabled oauth apps.
