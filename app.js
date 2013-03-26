@@ -66,6 +66,11 @@ app.get('/auth/flickr/callback',
     res.redirect('/');
   });
 
+app.get('/session', function(req, res){
+  console.log(req.session);
+  res.end();
+});
+
   
 app.get('/', routes.index);
 app.get('/test', testMiddleware.index, test.test);
