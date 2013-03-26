@@ -28,6 +28,18 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+passport.use(new FlickrStrategy({
+    consumerKey: process.env.FLICKR_API_KEY,
+    consumerSecret: process.env.FLICKR_API_SECRET,
+    callbackURL: "http://localhost:5000/auth/flickr/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    User.findOrCreate({ flickrId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+
   
 app.get('/', routes.index);
 app.get('/test', testMiddleware.index, test.test);
