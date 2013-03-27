@@ -7,7 +7,6 @@ var passport = require('passport')
   , twitterstrategy = require('passport-twitter')
   , config = JSON.parse(process.env.TWITTER);
 
-
 passport.use(new twitterstrategy.Strategy({
     consumerKey: config.consumer_key,
     consumerSecret: config.consumer_secret,
