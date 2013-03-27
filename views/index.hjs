@@ -3,6 +3,7 @@ index.html
 <ul>
 	<li><a href="/auth/flickr">flickr auth</a></li>
 	<li><a href="/auth/twitter">twitter auth</a></li>
-	<li><a href="/auth/google">google auth</a></li>	
+	<li><a href="/auth/google">google auth</a></li>
+	<li><a href="/refresh/google">google refresh token test</a></li>	
 </ul>
 <a href="/session">read session</a>

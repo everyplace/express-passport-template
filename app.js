@@ -40,6 +40,7 @@ app.get('/auth/twitter', passportTwitter.auth);
 app.get('/auth/twitter/callback', passportTwitter.callback);
 app.get('/auth/google', passportGoogle.auth);
 app.get('/auth/google/callback', passportGoogle.callback);
+app.get('/refresh/google', modelGoogle.refresh);
 app.get('/', routes.index);
 
 if(process.env.DEBUG == 'true') {

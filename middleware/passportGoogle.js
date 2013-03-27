@@ -12,7 +12,8 @@ passport.use(new googlestrategy({
     clientID: config.client_id,
     clientSecret: config.client_secret,
     callbackURL: config.redirect_uris[2],
-    accessType:"offline"
+    accessType:"offline",
+    approvalPrompt:"force"
   },
   function(accessToken, refreshToken, profile, done) {
     // console.log(profile);
