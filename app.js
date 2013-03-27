@@ -45,8 +45,8 @@ app.get('/', routes.index);
 if(process.env.DEBUG == 'true') {
   console.log("DEBUG ENABLED");
   app.get('/session', function(req, res){
-    console.log(req.session);
-    res.redirect('/');
+    res.writeHead(200, { 'Content-Type': 'application/json' });   
+    res.end(JSON.stringify(req.session));
   });  
 };
 
