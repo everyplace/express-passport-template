@@ -5,7 +5,7 @@
 
 var passport = require('passport')
   , googlestrategy = require('passport-google-oauth-offline')
-  , config = JSON.parse(process.env.TWITTER);
+  , config = JSON.parse(process.env.GOOGLE);
 
 passport.use(new googlestrategy.Strategy({
     consumerKey: config.consumer_key,
