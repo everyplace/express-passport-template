@@ -13,7 +13,8 @@ passport.use(new flickrstrategy.Strategy({
     callbackURL: config.callback_url
   },
   function(token, tokenSecret, profile, done) {
-    console.log(token, tokenSecret, profile);
+    // console.log(token, tokenSecret, profile);
+    profile.oauth = {"token":token, "secret":tokenSecret};    
     done(null, profile);
   }
 ));
@@ -31,5 +32,8 @@ exports.auth = function(req, res, next){
 };
 
 exports.callback = function(req, res, next){
-  passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' })(req, res, next);
+  passport.authenticate('flickr', { successRedirect: '/', failureRedirect: '/login' }, function(err, response){
+    req.session.flickr = response;
+    res.redirect('/');
+  })(req, res, next);  
 };
