@@ -12,9 +12,8 @@ passport.use(new googlestrategy({
     clientSecret: config.client_secret,
     callbackURL: config.redirect_uris[2]
   },
-
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
+    // console.log(profile);
     profile.oauth = {"accessToken":accessToken, "refreshToken":refreshToken};
     done(null, profile);
   }

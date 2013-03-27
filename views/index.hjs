@@ -1,6 +1,5 @@
 index.html
 {{title}}
-{{test}}
 <ul>
 	<li><a href="/auth/flickr">flickr auth</a></li>
 	<li><a href="/auth/twitter">twitter auth</a></li>
