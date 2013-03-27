@@ -4,10 +4,10 @@
  */
 
 var passport = require('passport')
-  , twitterstrategy = require('passport-twitter')
+  , googlestrategy = require('passport-google-oauth-offline')
   , config = JSON.parse(process.env.TWITTER);
 
-passport.use(new twitterstrategy.Strategy({
+passport.use(new googlestrategy.Strategy({
     consumerKey: config.consumer_key,
     consumerSecret: config.consumer_secret,
     callbackURL: config.callback_url
