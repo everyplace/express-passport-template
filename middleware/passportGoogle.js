@@ -5,12 +5,14 @@
 
 var passport = require('passport')
   , googlestrategy = require('passport-google-oauth-offline').OAuth2Strategy
-  , config = JSON.parse(process.env.GOOGLE).web;
+  , config = JSON.parse(process.env.GOOGLE).web
+  , scope = JSON.parse(process.env.GOOGLE_SCOPE);
 
 passport.use(new googlestrategy({
     clientID: config.client_id,
     clientSecret: config.client_secret,
-    callbackURL: config.redirect_uris[2]
+    callbackURL: config.redirect_uris[2],
+    accessType:"offline"
   },
   function(accessToken, refreshToken, profile, done) {
     // console.log(profile);
@@ -28,8 +30,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 exports.auth = function(req, res, next){
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-                                            'https://www.googleapis.com/auth/userinfo.email'] })(req, res, next);
+  passport.authenticate('google', { scope: scope })(req, res, next);                                            
 };
 
 exports.callback = function(req, res, next){
