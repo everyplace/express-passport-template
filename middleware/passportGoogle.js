@@ -4,17 +4,18 @@
  */
 
 var passport = require('passport')
-  , googlestrategy = require('passport-google-oauth-offline')
-  , config = JSON.parse(process.env.GOOGLE);
+  , googlestrategy = require('passport-google-oauth-offline').OAuth2Strategy
+  , config = JSON.parse(process.env.GOOGLE).web;
 
-passport.use(new googlestrategy.Strategy({
-    consumerKey: config.consumer_key,
-    consumerSecret: config.consumer_secret,
-    callbackURL: config.callback_url
+passport.use(new googlestrategy({
+    clientID: config.client_id,
+    clientSecret: config.client_secret,
+    callbackURL: config.redirect_uris[2]
   },
-  function(token, tokenSecret, profile, done) {
-    // console.log(token, tokenSecret, profile);
-    profile.oauth = {"token":token, "secret":tokenSecret};
+
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    profile.oauth = {"accessToken":accessToken, "refreshToken":refreshToken};
     done(null, profile);
   }
 ));
@@ -28,12 +29,13 @@ passport.deserializeUser(function(id, done) {
 });
 
 exports.auth = function(req, res, next){
-  passport.authenticate('twitter')(req, res, next);
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+                                            'https://www.googleapis.com/auth/userinfo.email'] })(req, res, next);
 };
 
 exports.callback = function(req, res, next){
-  passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/login' }, function(err, response){
-    req.session.twitter = response;
+  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }, function(err, response){
+    req.session.google = response;
     res.redirect('/');
   })(req, res, next);
 };
