@@ -1,6 +1,6 @@
 
 /*
- * Passport Middleware for Twitter
+ * Passport Middleware for Google
  */
 
 var passport = require('passport')

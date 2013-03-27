@@ -8,7 +8,8 @@ var express = require('express')
   , passport = require('passport')  
   , passportFlickr = require('./middleware/passportFlickr')
   , passportTwitter = require('./middleware/passportTwitter')
-  , passportGoogle = require('./middleware/passportGoogle');
+  , passportGoogle = require('./middleware/passportGoogle')
+  , google = require('./middleware/google');
 
 
 var app = module.exports = express();
@@ -40,7 +41,7 @@ app.get('/auth/twitter', passportTwitter.auth);
 app.get('/auth/twitter/callback', passportTwitter.callback);
 app.get('/auth/google', passportGoogle.auth);
 app.get('/auth/google/callback', passportGoogle.callback);
-app.get('/refresh/google', modelGoogle.refresh);
+app.get('/refresh/google', google.refresh);
 app.get('/', routes.index);
 
 if(process.env.DEBUG == 'true') {
